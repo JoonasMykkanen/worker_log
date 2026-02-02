@@ -1,14 +1,8 @@
 [
   {
-    "Date": "2026-01-30T00:00:00Z",
+    "Date": "2026-02-02T00:00:00Z",
     "Count": 2,
-    "Duration": 40,
-    "Calls": 0
-  },
-  {
-    "Date": "2026-01-29T00:00:00Z",
-    "Count": 1,
-    "Duration": 10,
+    "Duration": 90,
     "Calls": 0
   }
 ]

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -47,12 +48,17 @@ func CreateNewEntry(d int) Entry {
 	}
 }
 
+// fish pomodoro timer will call this with $work variable which is
+// either '25m' or '50m' in the current setup.
+//
+// This program will also work with plain integer inputs
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("duration argument mandatory (type: int)")
 		return
 	}
-	duration, err := strconv.Atoi(os.Args[1])
+	numStr := strings.TrimSuffix(os.Args[1], "m")
+	duration, err := strconv.Atoi(numStr)
 	if err != nil {
 		fmt.Printf("Error converting '%s' to integer", os.Args[1])
 		return
