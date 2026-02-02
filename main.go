@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"slices"
 	"time"
 )
 
@@ -80,33 +79,25 @@ func main() {
 		return
 	}
 
-	f, err := os.OpenFile(PATH, os.O_WRONLY, 0600)
-	if err != nil {
-		fmt.Printf("Error opening file at %s \n", PATH)
-	}
-	defer f.Close()
-
-	var n int
 	if todayExists {
 		first.Count += 1
 		first.Duration += duration
 	} else {
 		e := CreateNewEntry(duration)
 		entries = append([]Entry{e}, entries...)
-
-		dataToWrite, err := json.Marshal(e)
-		if err != nil {
-			fmt.Printf("%+v\n", err)
-			return
-		}
-
-		bytesToWrite := slices.Concat(dataToWrite, []byte{44, 10})
-		n, err = f.WriteAt(bytesToWrite, 2)
-		if err != nil {
-			fmt.Printf("Error writing to a file: %+v\n", err)
-			return
-		}
 	}
 
-	fmt.Printf("Wrote %d bytes to file", n)
+	dataToWrite, err := json.MarshalIndent(entries, "", "  ")
+	if err != nil {
+		fmt.Printf("Error marshaling: %+v\n", err)
+		return
+	}
+
+	err = os.WriteFile(PATH, dataToWrite, 0600)
+	if err != nil {
+		fmt.Printf("Error writing file: %+v\n", err)
+		return
+	}
+
+	fmt.Printf("Wrote %d bytes to file\n", len(dataToWrite))
 }
