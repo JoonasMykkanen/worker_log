@@ -7,10 +7,11 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"path/filepath"
 )
 
 const (
-	PATH         = "./data.json"
+	FILENAME         = "data.json"
 	TODAY_EXISTS = true
 )
 
@@ -48,6 +49,17 @@ func CreateNewEntry(d int) Entry {
 	}
 }
 
+func GetFilePath() string {
+	exePath, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	dir := filepath.Dir(exePath)
+	dataPath := filepath.Join(dir, "data.json")
+
+	return dataPath
+}
+
 // fish pomodoro timer will call this with $work variable which is
 // either '25m' or '50m' in the current setup.
 //
@@ -64,7 +76,8 @@ func main() {
 		return
 	}
 
-	file, err := os.ReadFile(PATH)
+	path := GetFilePath()
+	file, err := os.ReadFile(path)
 	if err != nil {
 		fmt.Printf("Error reading file: %+v", err)
 		return
@@ -99,7 +112,7 @@ func main() {
 		return
 	}
 
-	err = os.WriteFile(PATH, dataToWrite, 0600)
+	err = os.WriteFile(path, dataToWrite, 0600)
 	if err != nil {
 		fmt.Printf("Error writing file: %+v\n", err)
 		return
