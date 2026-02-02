@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
-	"path/filepath"
 )
 
 const (
-	FILENAME         = "data.json"
+	FILENAME     = "data.json"
 	TODAY_EXISTS = true
 )
 
@@ -118,5 +118,6 @@ func main() {
 		return
 	}
 
-	fmt.Printf("Wrote %d bytes to file\n", len(dataToWrite))
+	fmt.Printf("👷🏼 %d worked minutes added. Great job! 👷🏼\n", duration)
+	fmt.Printf("🚧 Your total worked minutes is now %d 🚧\n", first.Duration)
 }
