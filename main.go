@@ -13,6 +13,9 @@ import (
 const (
 	FILENAME     = "data.json"
 	TODAY_EXISTS = true
+
+	PURPLE = "\033[38;2;125;86;244m"
+	PINK = "\033[38;2;247;128;226m"
 )
 
 type Entry struct {
@@ -118,6 +121,7 @@ func main() {
 		return
 	}
 
-	fmt.Printf("👷🏼 %d worked minutes added. Great job! 👷🏼\n", duration)
-	fmt.Printf("🚧 Your total worked minutes is now %d 🚧\n", first.Duration)
+	fmt.Printf("👷🏼 %s %d %s worked minutes added. Great job! 👷🏼\n", PURPLE, duration, PINK)
+	fmt.Printf("🚧 Your total worked minutes is now %s %d 🚧\n", PURPLE, first.Duration)
+	fmt.Printf("\033[0m")
 }
